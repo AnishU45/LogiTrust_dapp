@@ -49,7 +49,7 @@ const SignUp = () => {
           </button>
         ) : (
           <>
-            <p className="mb-4">Connected account: {account}</p>
+            <p className="mb-4 text-black">Connected account: {account}</p>
             <div className="mb-4">
               <label htmlFor="name" className="block font-bold mb-2 text-black">Name</label>
               <input type="text"
@@ -69,11 +69,8 @@ const SignUp = () => {
                 className="border border-gray-300 rounded-md py-2 px-3 w-full"
               >
                 <option value="">Select a role</option>
-                <option value="sender">Sender</option>
                 <option value="agent">Agent</option>
-                <option value="intermediate Officer">Intermediate Officer</option>
-                <option value="receiver Office">Receiver Office</option>
-                <option value="transporter">Transporter</option>
+                <option value="receiver Agent">Receiver Agent</option>
                 <option value="bidder">Bidder</option>
               </select>
             </div>

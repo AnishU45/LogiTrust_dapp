@@ -1,14 +1,14 @@
 import { useState,useEffect } from "react";
 import Metamask from "../Landing Page/Metamask";
-import CreateShipment from "./CreateShipment";
-import CompleteShipment from "./CompleteShipment";
+import DeliverShipment from "./DeliverShipment"
+import CompleteShipment from "../AgentDashboard/CompleteShipment";
 
 const ContainerManagement = ()=>{
     
     const {account, getWeb3,containerContractConnection} = Metamask();
     const [allContainers, setAllContainers] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
-    const [showCreate,setShowCreate] = useState();
+    const [showDeliver,setShowDeliver] = useState();
     const [showComplete,setShowComplete] = useState();
     
     useEffect(()=>{
@@ -49,9 +49,9 @@ const ContainerManagement = ()=>{
                 <h1>Shipment Management</h1>
             </div>
             <div className="flex p-5 gap-5 mt-10 justify-center">
-                <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" 
-                onClick={()=>{setShowCreate(true)}}>
-                    Create Shipment
+                <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                onClick={()=>{setShowDeliver(true)}}>
+                    Deliver Shipment
                 </button>
                 <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 onClick={()=>{setShowComplete(true)}}>
@@ -98,7 +98,7 @@ const ContainerManagement = ()=>{
                             ))}
                         </tbody>
                     </table>
-                {showCreate && <CreateShipment onClose= {()=>{setShowCreate(false)}} />}
+                {showDeliver && <DeliverShipment onClose= {()=>{setShowDeliver(false)}} />}
                 {showComplete && <CompleteShipment onClose= {()=>{setShowComplete(false)}} />}
             </div>
         </div>

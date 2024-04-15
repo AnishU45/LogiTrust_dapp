@@ -22,8 +22,11 @@ const Login = () => {
       const rolesVar = await rolesContractConnection(web3);
       const data = await rolesVar.methods.login().call({from:account});
       console.log(data);
-      if(data[0] === name && data[1] === roles){
+      if(data[0] === name && data[1] === "agent"){
         navigate("../../Agent");
+      }
+      else if(data[0] === name && data[1] === "receiver Agent"){
+        navigate("../../ReceiverAgent")
       }
     } catch (error) {
       console.error(error);
@@ -66,11 +69,8 @@ const Login = () => {
                 className="border border-gray-300 rounded-md py-2 px-3 w-full"
               >
                 <option value="">Select a role</option>
-                <option value="sender">Sender</option>
                 <option value="agent">Agent</option>
-                <option value="intermediate Officer">Intermediate Officer</option>
-                <option value="receiver Office">Receiver Office</option>
-                <option value="transporter">Transporter</option>
+                <option value="receiver Agent">Receiver Agent</option>
                 <option value="bidder">Bidder</option>
               </select>
             </div>

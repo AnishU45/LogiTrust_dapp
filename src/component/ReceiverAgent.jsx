@@ -1,7 +1,9 @@
 import { PackageCheck } from "lucide-react";
 import { FileCheck2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Receiver = () => {
+  const navigate = useNavigate();
     const handleOptionClick = () => {
       console.log("clicked");
     };
@@ -23,7 +25,7 @@ const Receiver = () => {
                 </div>
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 p-2 cursor-pointer"
-            onClick={() => handleOptionClick()}>
+            onClick={navigate("./ShipmentStatus")}>
                 <div className="p-5 border >border-neutral-700 rounded-xl px-10">
                     <p className="text-5xl mb-5 mx-5">
                         <div className="flex mx-0 h-10 w-10 p-2 bg-neutral-900 text-orange-700 justify-center items-center rounded-full">
