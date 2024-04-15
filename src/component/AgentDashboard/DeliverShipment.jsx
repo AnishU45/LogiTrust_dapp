@@ -12,7 +12,7 @@ const DeliverShipment = ({onClose})=>{
         try{
             const web3 = await getWeb3();
             const containerVar = await containerContractConnection(web3);
-            const data = await containerVar.methods.deliverShipment().call({from:account});
+            const data = await containerVar.methods.deliverShipment(containerId).send({from:account});
             const result = data.events.ShipmentDelivered.returnValues[0];
             if(result!==0){
                 setShowSuccess(true);

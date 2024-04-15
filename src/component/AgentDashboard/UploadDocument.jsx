@@ -40,7 +40,7 @@ const UploadDocument = ({onClose})=> {
   // }
 
   const verifyDocument = async () => {
-    const web3 = getWeb3;
+    const web3 = await getWeb3();
     const containerVar = await containerContractConnection(web3);
     const data = await containerVar.methods.verifyDocuments(containerId).send({from:account});
     const result = data;
