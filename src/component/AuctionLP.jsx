@@ -2,7 +2,7 @@ import Navbar from "./Auction/Navbar";
 import HeroSection from "./Auction/HeroSection";
 import Footer from "./Auction/Footer";
 import Working from "./Auction/Working";
-import Bidding from "./Auction/Bidding";
+// import Bidding from "./Auction/Bidding";
 
 export const AuctionLP = () => {
   return (

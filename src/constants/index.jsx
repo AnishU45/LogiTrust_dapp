@@ -2,6 +2,9 @@ import { BookCheck } from 'lucide-react';
 import { MapPinned } from 'lucide-react';
 import { View } from 'lucide-react';
 
+import { Phone } from "lucide-react";
+import { MessagesSquare } from "lucide-react";
+
 export const navItems = [
   { label: "Features", href: "#" },
   { label: "Pricing", href: "#" }
@@ -65,5 +68,32 @@ export const communityLinks = [
   { href: "#", text: "Conferences" },
   { href: "#", text: "Jobs" },
   { href: "#", text: "Hackathons" },
+];
+
+export const quickLinks = [
+  { href: "#", text: "My Account" },
+  { href: "#", text: "Affiliate Program" },
+  { href: "#", text: "Lawyer Consulting" },
+  { href: "#", text: "Privacy Policy" },
+  { href: "#", text: "Term & Condition" },
+];
+
+export const helpCenter = [
+  { href: "#", text: "Contact Us" },
+  { href: "#", text: "FAQ" },
+  { href: "#", text: "Sell Your Product" },
+  { href: "#", text: "About Us" },
+  { href: "#", text: "Product Details" },
+];
+
+export const contactUs = [
+  {
+    icon: <Phone />,
+    text: "119-4643547",
+  },
+  {
+    icon: <MessagesSquare />,
+    text: "info@Logitrust.com",
+  },
 ];
 

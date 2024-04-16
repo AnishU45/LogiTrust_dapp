@@ -76,6 +76,7 @@ const ContainerManagement = ()=>{
                                 <th className="text-left py-3 px-4">Receiver</th>
                                 <th className="text-left py-3 px-4">Agent</th>
                                 <th className="text-left py-3 px-4">Receiver Agent</th>
+                                <th className="text-left py-3 px-4">Tranporter</th>
                                 <th className="text-left py-3 px-4">Multimodal</th>
                                 <th className="text-left py-3 px-4">State</th>
                             </tr>
@@ -92,6 +93,7 @@ const ContainerManagement = ()=>{
                                     <td className="py-3 px-4">{container.receiver}</td>
                                     <td className="py-3 px-4">{container.agent}</td>
                                     <td className="py-3 px-4">{container.receiverAgent}</td>
+                                    <td className="py-3 px-4">{container.transporter}</td>
                                     <td className="py-3 px-4">{container.Multimoda?"Yes":"No"}</td>
                                     <td className="py-3 px-4">{StateLables[container.state]}</td>
                                 </tr>

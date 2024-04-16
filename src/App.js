@@ -6,7 +6,7 @@ import ReceiverAgent from "./component/ReceiverAgent";
 import DocumentPage from './component/AgentDashboard/DocumentPage';
 import ContainerManagement from './component/AgentDashboard/ContainerManagement';
 import ShipmentStatus from "./component/ReceiverDashboar/ShipmentStatus";
-import AuctionLP from "./components/AuctionLP";
+import AuctionLP from "./component/AuctionLP";
 
 
 

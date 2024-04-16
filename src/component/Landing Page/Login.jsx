@@ -8,12 +8,9 @@ const Login = () => {
   //const [rolesVar, setRoleVar] = useState("");
   const [name, setName] = useState("");
   const [roles, setRoles] = useState([
-    "Sender",
     "Agent",
-    "Port Officer",
-    "Receiver",
+    "Receiver Agent",
     "Bidder",
-    "Transporter",
   ]);
 
   const handleLogin = async () => {

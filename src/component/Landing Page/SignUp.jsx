@@ -8,12 +8,9 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [showPopup , setShowPopUp] = useState(false);
   const [roles, setRoles] = useState([
-    "Sender",
     "Agent",
-    "Port Officer",
-    "Receiver",
+    "Receiver Agent",
     "Bidder",
-    "Transporter",
   ]);
 
   const handleSignUp = async () => {

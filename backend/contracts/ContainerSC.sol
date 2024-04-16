@@ -21,6 +21,7 @@ contract ContainerSC {
         address receiver;
         address agent;
         address receiverAgent;
+        address transporter;
         bool Multimodal;
         ContainerState state;
         string[] IPFShash;
@@ -44,6 +45,7 @@ contract ContainerSC {
         address _sender,
         address _receiver,
         address _receiverAgent,
+        address _transporter,
         bool _Multimodal
     ) external {
         containerCount++;
@@ -56,6 +58,7 @@ contract ContainerSC {
         newContainer.receiver = _receiver;
         newContainer.agent = msg.sender;
         newContainer.receiverAgent = _receiverAgent;
+        newContainer.transporter = _transporter;
         newContainer.Multimodal = _Multimodal;
         newContainer.state = ContainerState.Created;
         

@@ -14,6 +14,7 @@ const SenderPage = ({onClose}) => {
     senderAddress:"",
     receiverAddress:"",
     receiverAgentAddress:"",
+    transporter:"",
     isMultimodal: false,
   });
 
@@ -47,6 +48,7 @@ const SenderPage = ({onClose}) => {
                                                               formData.senderAddress,
                                                               formData.receiverAddress,
                                                               formData.receiverAgentAddress,
+                                                              formData.transporter,
                                                               formData.isMultimodal).send({ from: account });
       const result = data.events.ShipmentRequested.returnValues;
       console.log(result);
@@ -157,6 +159,19 @@ const SenderPage = ({onClose}) => {
                 id="receiverAgentAddress"
                 name="receiverAgentAddress"
                 value={formData.receiverAgentAddress}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-md"
+              />
+            </div>
+            <div>
+              <label htmlFor="transporter" className="block mb-1">
+                Transporter Address:
+              </label>
+              <input
+                type="text"
+                id="transporter"
+                name="transporter"
+                value={formData.transporter}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-md"
               />
