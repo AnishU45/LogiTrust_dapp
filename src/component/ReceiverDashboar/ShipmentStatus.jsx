@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import Metamask from "../Landing Page/Metamask";
 import DeliverShipment from "./DeliverShipment"
 import CompleteShipment from "../AgentDashboard/CompleteShipment";
+import ClaimShipment from "./ClaimShipment";
 
 const ContainerManagement = ()=>{
     
@@ -10,6 +11,7 @@ const ContainerManagement = ()=>{
     const [refreshData, setRefreshData] = useState(false);
     const [showDeliver,setShowDeliver] = useState();
     const [showComplete,setShowComplete] = useState();
+    const [showClaim,setShowClaim] = useState();
     
     useEffect(()=>{
         const init = async()=>{
@@ -18,7 +20,11 @@ const ContainerManagement = ()=>{
                 const containerVar = await containerContractConnection(web3);
                 const data = await containerVar.methods.getAllContainers().call({from:account});
                 console.log(data);
-                setAllContainers(data);
+                const filteredContainers = data.filter((container) => {
+                    const state = parseInt(container.state);
+                    return state === 2 || state === 3 || state === 4 || state === 5;
+                  });
+                  setAllContainers(filteredContainers);
                 }
             catch (error) {
                 console.error(error);
@@ -41,6 +47,7 @@ const ContainerManagement = ()=>{
         2: 'ShipmentInProgress',
         3: 'ShipmentDelivered',
         4: 'Completed',
+        5: 'Claimed'
     };
 
     return(
@@ -56,6 +63,10 @@ const ContainerManagement = ()=>{
                 <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 onClick={()=>{setShowComplete(true)}}>
                     Complete Shipment
+                </button>
+                <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                onClick={()=>{setShowClaim(true)}}>
+                    Claim Shipment
                 </button>
             </div>
     <       div className="border-b pb-4 mt-10">
@@ -102,6 +113,7 @@ const ContainerManagement = ()=>{
                     </table>
                 {showDeliver && <DeliverShipment onClose= {()=>{setShowDeliver(false)}} />}
                 {showComplete && <CompleteShipment onClose= {()=>{setShowComplete(false)}} />}
+                {showClaim && <ClaimShipment onClose={()=>{setShowClaim(false)}}/>}
             </div>
         </div>
     )

@@ -3,18 +3,18 @@ import Metamask from "../Landing Page/Metamask";
 import SuccessPage from "../SuccessPage";
 import { X } from 'lucide-react'; 
 
-const CreateShipment = ({onClose})=>{
+const ClaimShipment = ({onClose})=>{
     const [containerId, setContainerId] = useState();
     const {account, getWeb3,containerContractConnection} = Metamask();
     const [showSuccess, setShowSuccess] = useState(false);
-    const [showMode , setMode] = useState(true);
+    const [receiverAddress,setReceiver] = useState();
 
     const handleCreate = async()=>{
         try{
             const web3 = await getWeb3();
             const containerVar = await containerContractConnection(web3);
-            const data = await containerVar.methods.createShipment(containerId,showMode).send({from:account});
-            const result = data.events.ShipmentCreated.returnValues[0];
+            const data = await containerVar.methods.claimShipment(containerId,receiverAddress).send({from:account});
+            const result = data.events.ShipmentClaimed.returnValues[0];
             if(result!==0){
                 setShowSuccess(true);
             }
@@ -30,8 +30,21 @@ const CreateShipment = ({onClose})=>{
                 <div className="flex justify-end">
                     <div><button className="mt-4 px-4 py-2 text-red-600 rounded-md" onClick={onClose}><X/></button></div>
                 </div>
-                    <h1 className="text-2xl font-bold mb-4">Create Shipment</h1>
+                    <h1 className="text-2xl font-bold mb-4">Claim Shipment</h1>
                     <form>
+                        <div>
+                        <label htmlFor="receiverAddress" className="block mb-1">
+                            Receiver Address:
+                        </label>
+                            <input
+                            type="text"
+                            id="receiverAddress"
+                            name="receiverAddress"
+                            value={receiverAddress}
+                            onChange={(e) =>{setReceiver(e.target.value)}}
+                            className="w-full px-4 py-2 border rounded-md"
+                            />
+                        </div>
                         <label htmlFor="containerId" className="block">
                         Container ID:
                         <input
@@ -42,34 +55,14 @@ const CreateShipment = ({onClose})=>{
                         className="border border-gray-400 rounded px-2 py-1 mt-1"
                         />
                         </label>
-                        <div className="col-span-2 gap-3">
-                            <label htmlFor="multimodal">Multimodal</label>
-                            <input type="radio"
-                                   id="multimodal"
-                                   name = "isMultimodal"
-                                   value = "true"
-                                   onChange={(e)=>{setMode(e.target.value === "true")}}
-                                   checked ={showMode}
-                                   className="mr-2"
-                            />
-                            <label htmlFor="unimodal">Unimodal</label>
-                            <input type="radio"
-                                   id="unimodal"
-                                   name = "isMultimodal"
-                                   value = "false"
-                                   onChange={(e)=>{setMode(e.target.value === "true")}}
-                                   checked ={!showMode} 
-                                   className="mr-2"
-                            />
-                        </div>
                         <button className="bg-blue-500 text-white px-4 py-2 mt-2 rounded" onClick={handleCreate}>
-                        Create
+                        Claim
                         </button>
                     </form>
                 </div>
-            {showSuccess && <SuccessPage message={"Shipment Created"} onCloseMsg={()=>setShowSuccess(false)}/>}
+            {showSuccess && <SuccessPage message={"Shipment Updated"} onCloseMsg={()=>setShowSuccess(false)}/>}
         </div>        
     );
 };
 
-export default CreateShipment;
+export default ClaimShipment;

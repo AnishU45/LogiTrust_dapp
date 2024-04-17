@@ -5,13 +5,11 @@ import logo from "../../assets/logo.jpeg";
 import { navItems } from "../../constants";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [showSignUpPage, setShowSignUpPage] = useState(false);
   const [showLoginPage, setShowLoginPage] = useState(false);
-  const navigate = useNavigate();
 
   const toggleNavbar = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
@@ -41,15 +39,6 @@ const Navbar = () => {
             ))}
           </ul>
           <div className="hidden lg:flex justif space-x-12 items-center">
-            <a
-              href="#"
-              className=" py-2 px-3 border border-blue-700 bg-blue-600 rounded-md"
-              onClick={() => {
-                navigate("./AuctionLP");
-              }}
-            >
-              AUCTION
-            </a>
             <a href="#" className="py-2 px-3 border rounded-md"
               onClick={toggleLoginPage}
             >
@@ -79,15 +68,6 @@ const Navbar = () => {
               ))}
             </ul>
             <div className="flex space-x-6">
-              <a
-                href="#"
-                className="py-2 px-3 border rounded-md"
-                onClick={() => {
-                  navigate("./AuctionLP");
-                }}
-              >
-                AUCTION
-              </a>
               <a href="#" className="py-2 px-3 boder rounded-md"
                 onClick={toggleLoginPage}
               >

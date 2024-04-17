@@ -2,6 +2,7 @@ import { useState,useEffect } from "react";
 import Metamask from "../Landing Page/Metamask";
 import CreateShipment from "./CreateShipment";
 import CompleteShipment from "./CompleteShipment";
+import UpdateShipment from "./UpdateShipment";
 
 const ContainerManagement = ()=>{
     
@@ -10,6 +11,7 @@ const ContainerManagement = ()=>{
     const [refreshData, setRefreshData] = useState(false);
     const [showCreate,setShowCreate] = useState();
     const [showComplete,setShowComplete] = useState();
+    const [showUpdate,setShowUpdate] = useState();
     
     useEffect(()=>{
         const init = async()=>{
@@ -52,6 +54,10 @@ const ContainerManagement = ()=>{
                 <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" 
                 onClick={()=>{setShowCreate(true)}}>
                     Create Shipment
+                </button>
+                <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" 
+                onClick={()=>{setShowUpdate(true)}}>
+                    Update Shipment
                 </button>
                 <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 onClick={()=>{setShowComplete(true)}}>
@@ -101,6 +107,7 @@ const ContainerManagement = ()=>{
                         </tbody>
                     </table>
                 {showCreate && <CreateShipment onClose= {()=>{setShowCreate(false)}} />}
+                {showUpdate && <UpdateShipment onClose= {()=>{setShowUpdate(false)}} />}
                 {showComplete && <CompleteShipment onClose= {()=>{setShowComplete(false)}} />}
             </div>
         </div>

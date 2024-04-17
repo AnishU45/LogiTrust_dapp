@@ -9,7 +9,8 @@ contract ContainerSC {
         DocumentsVerified,
         ShipmentInProgress,
         ShipmentDelivered,
-        Completed
+        Completed,
+        Claim
     }
 
     struct Container {
@@ -31,10 +32,12 @@ contract ContainerSC {
     uint256 public containerCount;
 
     event ShipmentRequested(uint256 containerId, address sender);
+    event ShipmentUpdated(uint256 contianerId);
     event DocumentsVerified(uint256 containerId);
     event ShipmentCreated(uint256 containerId);
     event ShipmentDelivered(uint256 containerId);
     event ShipmentCompleted(uint256 containerId);
+    event ShipmentClaimed(uint256 containerId);
     event DocumentUploaded(uint256 containerId, string ipfsHash);
 
     function requestShipment(
@@ -45,8 +48,7 @@ contract ContainerSC {
         address _sender,
         address _receiver,
         address _receiverAgent,
-        address _transporter,
-        bool _Multimodal
+        address _transporter
     ) external {
         containerCount++;
         Container storage newContainer = containers[containerCount];
@@ -59,10 +61,29 @@ contract ContainerSC {
         newContainer.agent = msg.sender;
         newContainer.receiverAgent = _receiverAgent;
         newContainer.transporter = _transporter;
-        newContainer.Multimodal = _Multimodal;
         newContainer.state = ContainerState.Created;
         
         emit ShipmentRequested(containerCount, msg.sender);
+    }
+
+    function updateShipment(
+        uint256 _containerId,
+        string memory _origin,
+        string memory _destination,
+        address _receiverAgent,
+        address _transporter
+    ) external {
+        Container storage updateContainer = containers[_containerId];
+        require(msg.sender == updateContainer.agent,"Invalid User");
+        require(updateContainer.state == ContainerState.Completed,"Cannot Forward the package someone have stolen it");
+        updateContainer.origin = _origin;
+        updateContainer.destination = _destination;
+        updateContainer.agent = msg.sender;
+        updateContainer.receiverAgent = _receiverAgent;
+        updateContainer.transporter = _transporter;
+        updateContainer.state = ContainerState.Created;
+        
+        emit ShipmentUpdated(containerCount);
     }
 
     function verifyDocuments(uint256 _containerId) external {
@@ -74,11 +95,12 @@ contract ContainerSC {
         emit DocumentsVerified(_containerId);
     }
 
-    function createShipment(uint256 _containerId) external {
+    function createShipment(uint256 _containerId,bool _multimodal) external {
         Container storage container = containers[_containerId];
         require(msg.sender == container.agent, "Unauthorized");
         require(container.state == ContainerState.DocumentsVerified, "Invalid state");
-        
+
+        container.Multimodal = _multimodal;        
         container.state = ContainerState.ShipmentInProgress;
         emit ShipmentCreated(_containerId);
     }
@@ -99,6 +121,17 @@ contract ContainerSC {
         
         container.state = ContainerState.Completed;
         emit ShipmentCompleted(_containerId);
+    }
+
+    function claimShipment(uint256 _containerId , address _receiver) external {
+        Container storage container = containers[_containerId];
+        require(container.state == ContainerState.Completed, "Shipment not reached yet");
+        require(container.receiver == _receiver, "Invalid receiver");
+        require(msg.sender == container.receiverAgent,"Claim Not allowed");
+
+        container.state = ContainerState.Claim;
+        emit ShipmentClaimed(_containerId);
+        
     }
 
     function uploadDocumentToIPFS(uint256 _containerId, string memory _hashIPFS) external {
