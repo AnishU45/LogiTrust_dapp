@@ -4,7 +4,7 @@ import DeliverShipment from "./DeliverShipment"
 import CompleteShipment from "../AgentDashboard/CompleteShipment";
 import ClaimShipment from "./ClaimShipment";
 
-const ContainerManagement = ()=>{
+const ShipmentStatus = ()=>{
     
     const {account, getWeb3,containerContractConnection} = Metamask();
     const [allContainers, setAllContainers] = useState([]);
@@ -120,4 +120,4 @@ const ContainerManagement = ()=>{
 
 };
 
-export default ContainerManagement;
+export default ShipmentStatus;

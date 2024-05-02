@@ -1,43 +1,65 @@
 import React, { useState } from 'react';
-// import {create} from '@tatumio/tatum';
 import MetaMask from "../Landing Page/Metamask";
 import { X } from 'lucide-react';
 import SuccessPage from "../SuccessPage";
-
+import axios from 'axios';
 
 const UploadDocument = ({onClose})=> {
   const {account,getWeb3,containerContractConnection} = MetaMask();
-  // const [file, setFile] = useState(null);
-  // const [ipfsHash, setIpfsHash] = useState('');
+  const [file, setFile] = useState(null);
+  const [cid, setCid] = useState('');
   const [containerId, setContainerId] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  // };
+  const JWT ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI2NTA1M2E1Yy04ZjlmLTQyNjItOTJiMi1lYzA4ZTZhYjBhZTgiLCJlbWFpbCI6ImFuaXNodXBnYW5sYXdhcjEyM0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiYzE1ZGJjN2FhZjk2ZGRmYTQyZDUiLCJzY29wZWRLZXlTZWNyZXQiOiJiMDUxNWRlNmU1YzdkNGJhNmMyOWRkZGM4ZDMzNTUyNDhlNzZjMmU1NTU4OWU0MGEwYWQyZDc3OTExYzEwOTgyIiwiaWF0IjoxNzE0NjQ4MTQzfQ.Kuesgh8eLVNWx3kG6DDGVzYPafQbIiRQc_OZ2ok573g';
 
-  // const uploadFileToIpfs = async () => {
-  //   try {
-  //     const tatum = create(process.env.TATUM_API_KEY);
-  //     const ipfsResponse = await tatum.ipfsStore(file);
-  //     console.log('IPFS CID:', ipfsResponse.hash);
-  //     setIpfsHash(ipfsHash);
-  //     handleUpload(ipfsResponse.hash);
-  //   } catch (error) {
-  //     console.error('Error uploading to IPFS:', error);
-  //   }
-  // };
+  const uploadFile = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-  // const handleUpload = async(ipfsHash)=>{
-  //     const web3 = getWeb3;
-  //     const containerVar = await containerContractConnection(web3);
-  //     const data = await containerVar.methods.uploadDocumentToIPFS(containerId, ipfsHash).send({from:account});
-  //     const result = await data.events.DocumentUploaded.returnValues[0];
+      const pinataMetadata = JSON.stringify({
+        name: "File name",
+      });
+      formData.append("pinataMetadata", pinataMetadata);
 
-  //   if(result !==0){
-  //     setShowSuccess(true);
-  //   }
-  // }
+      const pinataOptions = JSON.stringify({
+        cidVersion: 1,
+      });
+      formData.append("pinataOptions", pinataOptions);
+
+      const res = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${JWT}`,
+          },
+        }
+      );
+
+      setCid(res.data.IpfsHash);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async() =>{
+    await uploadFile(file);
+    await uploadDocument();
+  }
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const uploadDocument = async() =>{
+    const web3 = await getWeb3();
+    const containerVar = await containerContractConnection(web3);
+    const data = await containerVar.methods.uploadDocumentToIPFS(containerId,cid).send({from:account});
+    const result = data;
+    console.log(result);
+  }
 
   const verifyDocument = async () => {
     const web3 = await getWeb3();
@@ -57,11 +79,11 @@ const UploadDocument = ({onClose})=> {
       <label htmlFor="containerId" className="block">Container Id :</label>
       <input type="text" id="containerId" value={containerId} onChange={(e)=>{setContainerId(e.target.value)}}
                 className="w-full border border-gray-400 rounded px-2 py-1 mt-1"/>
-      {/*<input type="file" onChange={handleFileChange} className="mb-4" />
-      <button onClick={uploadFileToIpfs} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+      <input type="file" onChange={handleFileChange} className="mb-4" />
+      <button onClick={handleSubmit} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
         Upload to IPFS
       </button>
-      {ipfsHash && <p className="mt-4">IPFS Hash: {ipfsHash}</p>} */}
+      {/* {ipfsHash && <p className="mt-4">IPFS Hash: {ipfsHash}</p>} */}
       <button onClick={verifyDocument} className="bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-600">
         Verify Document
       </button>

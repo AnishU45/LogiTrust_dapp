@@ -25,7 +25,7 @@ contract ContainerSC {
         address transporter;
         bool Multimodal;
         ContainerState state;
-        string[] IPFShash;
+        string IPFShash;
     }
 
     mapping(uint256 => Container) public containers;
@@ -138,12 +138,12 @@ contract ContainerSC {
         Container storage container = containers[_containerId];
         require(msg.sender == container.agent, "Unauthorized");
         
-        container.IPFShash.push(_hashIPFS);
+        container.IPFShash = _hashIPFS;
         emit DocumentUploaded(_containerId, _hashIPFS);
     }
 
-    function getDocumentFromIPFS(uint256 _containerId, uint256 _index) external view returns (string memory) {
-        return containers[_containerId].IPFShash[_index];
+    function getDocumentFromIPFS(uint256 _containerId) external view returns (string memory) {
+        return containers[_containerId].IPFShash;
     }
 
     function getAllContainers() external view returns (Container[] memory) {
