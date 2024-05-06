@@ -43,6 +43,7 @@ const ContainerManagement = ()=>{
         2: 'ShipmentInProgress',
         3: 'ShipmentDelivered',
         4: 'Completed',
+        5: 'Claimed'
     };
 
     return(
@@ -99,8 +100,8 @@ const ContainerManagement = ()=>{
                                     <td className="py-3 px-4">{container.receiver}</td>
                                     <td className="py-3 px-4">{container.agent}</td>
                                     <td className="py-3 px-4">{container.receiverAgent}</td>
-                                    <td className="py-3 px-4">{container.tranporter}</td>
-                                    <td className="py-3 px-4">{container.Multimoda?"Yes":"No"}</td>
+                                    <td className="py-3 px-4">{container.transporter}</td>
+                                    <td className="py-3 px-4">{container.Multimodal?"Yes":"No"}</td>
                                     <td className="py-3 px-4">{StateLables[container.state]}</td>
                                 </tr>
                             ))}

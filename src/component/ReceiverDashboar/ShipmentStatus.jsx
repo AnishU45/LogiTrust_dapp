@@ -1,7 +1,6 @@
 import { useState,useEffect } from "react";
 import Metamask from "../Landing Page/Metamask";
 import DeliverShipment from "./DeliverShipment"
-import CompleteShipment from "../AgentDashboard/CompleteShipment";
 import ClaimShipment from "./ClaimShipment";
 
 const ShipmentStatus = ()=>{
@@ -10,7 +9,6 @@ const ShipmentStatus = ()=>{
     const [allContainers, setAllContainers] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [showDeliver,setShowDeliver] = useState();
-    const [showComplete,setShowComplete] = useState();
     const [showClaim,setShowClaim] = useState();
     
     useEffect(()=>{
@@ -61,10 +59,6 @@ const ShipmentStatus = ()=>{
                     Deliver Shipment
                 </button>
                 <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-                onClick={()=>{setShowComplete(true)}}>
-                    Complete Shipment
-                </button>
-                <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                 onClick={()=>{setShowClaim(true)}}>
                     Claim Shipment
                 </button>
@@ -105,14 +99,13 @@ const ShipmentStatus = ()=>{
                                     <td className="py-3 px-4">{container.agent}</td>
                                     <td className="py-3 px-4">{container.receiverAgent}</td>
                                     <td className="py-3 px-4">{container.transporter}</td>
-                                    <td className="py-3 px-4">{container.Multimoda?"Yes":"No"}</td>
+                                    <td className="py-3 px-4">{container.Multimodal?"Yes":"No"}</td>
                                     <td className="py-3 px-4">{StateLables[container.state]}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 {showDeliver && <DeliverShipment onClose= {()=>{setShowDeliver(false)}} />}
-                {showComplete && <CompleteShipment onClose= {()=>{setShowComplete(false)}} />}
                 {showClaim && <ClaimShipment onClose={()=>{setShowClaim(false)}}/>}
             </div>
         </div>

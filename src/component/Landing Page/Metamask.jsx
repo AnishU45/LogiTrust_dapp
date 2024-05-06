@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Web3 from 'web3';
-import auctionContract from "../../contracts/Auction.json";
 import containerContract from "../../contracts/ContainerSC.json";
 import rolesContract  from "../../contracts/Roles.json";
 
@@ -65,21 +64,12 @@ export const Metamask = () => {
         const containerVar = new web3.eth.Contract(containerContract.abi,netData.address);
         return(containerVar);
     };
-
-    const auctionContractConnection = async(web3) =>{
-        const netId = await web3.eth.net.getId();
-        const netData = auctionContract.networks[netId];
-        console.log(netData.address);
-        const auctionVar = new web3.eth.Contract(auctionContract.abi,netData.address);
-        return(auctionVar);
-    };
-  
+    
     return {
       account,
       getWeb3,
       rolesContractConnection,
-      containerContractConnection,
-      auctionContractConnection      
+      containerContractConnection  
     };
   };
   

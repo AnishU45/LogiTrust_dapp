@@ -43,7 +43,7 @@ const RetrieveDocument = (onClose) => {
                 <div className="flex justify-end">
                     <div><button className="mt-4 px-4 py-2 text-red-600 rounded-md" onClick={onClose}><X/></button></div>
                 </div>
-                    <h1 className="text-2xl font-bold mb-4">Deliver Shipment</h1>
+                    <h1 className="text-2xl font-bold mb-4">Document Retreive</h1>
                     <form>
                         <label htmlFor="containerId" className="block">
                         Container ID:

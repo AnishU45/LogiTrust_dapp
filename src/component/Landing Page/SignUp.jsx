@@ -9,8 +9,7 @@ const SignUp = () => {
   const [showPopup , setShowPopUp] = useState(false);
   const [roles, setRoles] = useState([
     "Agent",
-    "Receiver Agent",
-    "Bidder",
+    "Receiver Agent"
   ]);
 
   const handleSignUp = async () => {
@@ -68,7 +67,6 @@ const SignUp = () => {
                 <option value="">Select a role</option>
                 <option value="agent">Agent</option>
                 <option value="receiver Agent">Receiver Agent</option>
-                <option value="bidder">Bidder</option>
               </select>
             </div>
             <button
